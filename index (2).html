@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Service Sell K-Bine</title>
+    
+    <!-- Configuration PWA pour mobile (Android & iOS) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="K-Bine">
+    <meta name="theme-color" content="#0f172a">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .abidjan-bg {
+            background-image: linear-gradient(rgba(10, 15, 30, 0.86), rgba(15, 23, 42, 0.92)), url('AFRIQUEMAGAZINE_466_20250708 (3).pdf-image-010_2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        /* Liseré aux couleurs du drapeau ivoirien (Orange, Blanc, Vert) */
+        .ivory-border {
+            border-top: 4px solid #f97316;
+            border-bottom: 4px solid #10b981;
+        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.5); border-radius: 10px; }
+    </style>
+</head>
+<body class="abidjan-bg text-slate-100 min-h-screen font-sans antialiased pb-12">
+
+    <!-- En-tête avec l'icône originale claire et lisible -->
+    <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md shadow-xl ivory-border">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-500 via-white to-emerald-500 flex items-center justify-center shadow-md p-0.5">
+                    <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center">
+                        <i class="fa-solid fa-bolt text-orange-400 text-xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-black text-base md:text-lg tracking-wide text-white flex items-center gap-1.5">
+                        Service Sell K-Bine 🇨🇮
+                    </h1>
+                    <p class="text-xs text-sky-400 font-semibold">Souscription Appels & Internet</p>
+                </div>
+            </div>
+            <button onclick="showInstallHelp()" class="bg-sky-500/20 border border-sky-500/50 text-sky-300 px-3 py-1.5 rounded-full text-xs font-semibold flex items-center space-x-1.5 hover:bg-sky-500/30 transition-all shadow">
+                <i class="fa-solid fa-download"></i>
+                <span>Installer</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="max-w-4xl mx-auto px-4 py-6 space-y-6">
+
+        <!-- Sélection Opérateur -->
+        <div class="space-y-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">1. Choisis ton opérateur</h2>
+            <div class="grid grid-cols-4 gap-2">
+                <button onclick="selectOperator('orange')" id="btn-orange" class="operator-btn flex flex-col items-center justify-center p-2.5 rounded-2xl border-2 border-orange-500 bg-orange-500/20 text-white transition-all shadow-lg">
+                    <div class="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center font-bold text-white text-xs mb-1">O</div>
+                    <span class="text-xs font-bold">Orange</span>
+                </button>
+                <button onclick="selectOperator('mtn')" id="btn-mtn" class="operator-btn flex flex-col items-center justify-center p-2.5 rounded-2xl border-2 border-slate-700 bg-slate-800/80 text-slate-300 transition-all">
+                    <div class="w-7 h-7 rounded-full bg-yellow-500 flex items-center justify-center font-bold text-slate-950 text-xs mb-1">M</div>
+                    <span class="text-xs font-bold">MTN</span>
+                </button>
+                <button onclick="selectOperator('moov')" id="btn-moov" class="operator-btn flex flex-col items-center justify-center p-2.5 rounded-2xl border-2 border-slate-700 bg-slate-800/80 text-slate-300 transition-all">
+                    <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs mb-1">M</div>
+                    <span class="text-xs font-bold">Moov</span>
+                </button>
+                <button onclick="selectOperator('credit')" id="btn-credit" class="operator-btn flex flex-col items-center justify-center p-2.5 rounded-2xl border-2 border-slate-700 bg-slate-800/80 text-slate-300 transition-all">
+                    <div class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-white text-xs mb-1">🪙</div>
+                    <span class="text-xs font-bold">Crédit</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recherche -->
+        <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+            <input type="text" id="search-input" oninput="filterPasses()" placeholder="Rechercher un pass (ex: 500, 10Go...)" class="w-full bg-slate-900/90 border border-slate-700 rounded-2xl pl-11 pr-4 py-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-sky-500 shadow-inner">
+        </div>
+
+        <!-- Liste des Forfaits -->
+        <div class="space-y-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">2. Sélectionne ton forfait</h2>
+            <div id="passes-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[380px] overflow-y-auto pr-1">
+                <!-- Généré dynamiquement -->
+            </div>
+        </div>
+
+        <!-- Formulaire & Paiement -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 shadow-xl space-y-4 backdrop-blur-md">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400"><i class="fa-solid fa-shield-halved mr-1"></i>3. Validation & Paiement</h2>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Numéro à recharger :</label>
+                    <input type="tel" id="target-phone" placeholder="Ex: 0700000000" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-red-400 mb-1">Ton Numéro Wave (Obligatoire) :</label>
+                    <input type="tel" id="wave-phone" placeholder="Ex: 0500000000" class="w-full bg-slate-800 border border-red-500/50 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]" required>
+                </div>
+            </div>
+
+            <!-- Récapitulatif -->
+            <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-3.5 flex justify-between items-center text-sm">
+                <div>
+                    <p class="text-xs text-slate-400">Forfait choisi :</p>
+                    <p id="summary-title" class="font-bold text-white">Aucun forfait</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-slate-400">Montant :</p>
+                    <p id="summary-price" class="font-black text-sky-400">0 FCFA</p>
+                </div>
+            </div>
+
+            <!-- Bouton d'action -->
+            <button onclick="processCheckout()" class="w-full bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-500 hover:to-sky-400 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all flex items-center justify-center space-x-2 text-sm">
+                <i class="fa-solid fa-lock text-xs"></i>
+                <span>Payer via Wave & Envoyer sur WhatsApp</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Modale d'aide pour l'installation mobile -->
+    <div id="install-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 max-w-sm w-full space-y-4 text-center">
+            <div class="w-12 h-12 bg-sky-500/20 text-sky-400 rounded-2xl mx-auto flex items-center justify-center text-xl">
+                <i class="fa-solid fa-mobile-screen"></i>
+            </div>
+            <h3 class="font-bold text-lg text-white">Installer l'application</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                Pour installer <b>Service Sell K-Bine</b> sur ton téléphone :<br><br>
+                🍏 <b>Sur iPhone (Safari) :</b> Appuie sur le bouton de partage <i class="fa-solid fa-arrow-up-from-bracket"></i> en bas, puis choisis <b>"Sur l'écran d'accueil"</b>.<br><br>
+                🤖 <b>Sur Android (Chrome) :</b> Appuie sur les 3 points <i class="fa-solid fa-ellipsis-vertical"></i> en haut à droite, puis choisis <b>"Installer l'application"</b> ou <b>"Ajouter à l'écran d'accueil"</b>.
+            </p>
+            <button onclick="closeInstallHelp()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-sm transition-all">
+                J'ai compris
+            </button>
+        </div>
+    </div>
+
+    <!-- Script JavaScript -->
+    <script>
+        const catalogues = {
+            orange: [
+                { name: "Pass 2500F - 7 jours", price: 2500, desc: "10Go tout usage" },
+                { name: "Pass 5000F - 30 jours", price: 5000, desc: "10Go tout usage" },
+                { name: "Pass Social Illimité 24H", price: 500, desc: "Facebook, WhatsApp - 1 jour" },
+                { name: "Pass Social Illimité + TikTok", price: 800, desc: "FB, WA, TikTok - 1 jour" },
+                { name: "Pass Max it 500F", price: 500, desc: "1.5Go - 3 jours" },
+                { name: "Pass Max it 1000F", price: 1000, desc: "4Go - 7 jours" },
+                { name: "Pass Social 300F", price: 300, desc: "450Mo - 3 jours" },
+                { name: "Pass Social 500F", price: 500, desc: "1Go FB/Insta - 7 jours" },
+                { name: "Pass Social TikTok 300F", price: 300, desc: "Accès TikTok" },
+                { name: "Data Kdo 3000F", price: 3000, desc: "4Go + 9000 pts - 30 Jours" },
+                { name: "Data Kdo 500F", price: 500, desc: "1Go + 1500 pts - 3 Jours" },
+                { name: "Pass 3jours 400F", price: 400, desc: "340Mo + Life Tv - 3 jours" },
+                { name: "Pass 3jours 700F", price: 700, desc: "750Mo + Videos Cuisine - 3 jours" },
+                { name: "Pass 1jr 300F", price: 300, desc: "900Mo - 1 jour" },
+                { name: "Pass 2jrs 200F", price: 200, desc: "220Mo - 2 jours" },
+                { name: "Pass 2jrs 300F", price: 300, desc: "400Mo - 2 jours" },
+                { name: "Pass 3Jours 400F", price: 400, desc: "340Mo + WAW MUZIK - 3 jours" },
+                { name: "Pass 3jrs 500F", price: 500, desc: "750Mo - 3 jours" },
+                { name: "Pass 500F - 1 jour", price: 500, desc: "1Go + Max it TV - 1 jour" },
+                { name: "Pass E-Book 1Go", price: 500, desc: "1Go + Youscribe - 3 jours" },
+                { name: "Pass E-Sport 1Go", price: 500, desc: "1Go + Orange Are.. - 3 jours" },
+                { name: "Pass Langue 400Mo", price: 300, desc: "400Mo + Busuu - 2 Jours" },
+                { name: "Pass Megawin 1Go", price: 500, desc: "1Go - 3 Jours" },
+                { name: "Pass 5jrs 1000F", price: 1000, desc: "1.5Go + 150Mo Spotify - 5 jours" },
+                { name: "Pass Semaine 1500F", price: 1500, desc: "2.5Go + 150Mo Spotify - 7 jours" },
+                { name: "Pass Semaine 800F", price: 800, desc: "750Mo + WAW MUZIK - 7 jours" },
+                { name: "Semaine 1200F", price: 1200, desc: "1.5Go + 7Info - 7 jours" },
+                { name: "Pass Data Hospicash", price: 3000, desc: "4Go + assurance - 30 Jours" },
+                { name: "Pass Mois 10000F", price: 10000, desc: "18Go + 500Mo Spotify - 30 jours" },
+                { name: "Pass Mois 20000F", price: 20000, desc: "40Go + 500Mo Spotify - 30 jours" },
+                { name: "Pass Mois 2500F", price: 2500, desc: "3.5Go + 500Mo Spotify - 30 jours" },
+                { name: "Pass Mois 3000F", price: 3000, desc: "2.7Go + WAW MUZIK - 30 jours" },
+                { name: "Pass Nuit internet 250F", price: 250, desc: "2Go + illimite - 1 jour" }
+            ],
+            mtn: [
+                { name: "Pass 200 FCFA", price: 200, desc: "220 Mo - Valide 2 jours" },
+                { name: "Pass 300 FCFA", price: 300, desc: "400 Mo - Valide 3 jours" },
+                { name: "Pass 400 FCFA", price: 400, desc: "450 Mo - Valide 3 jours" },
+                { name: "Pass 500 FCFA", price: 500, desc: "750 Mo - Valide 3 jours" },
+                { name: "Pass 1 000 FCFA", price: 1000, desc: "1,5 Go - Valide 5 jours" },
+                { name: "Pass 1 500 FCFA", price: 1500, desc: "2,2 Go - Valide 10 jours" },
+                { name: "Pass 2 000 FCFA", price: 2000, desc: "3 Go + MTN TV, FB/WA - 30 jours" },
+                { name: "Pass 2 500 FCFA", price: 2500, desc: "3,7 Go + MTN TV, FB/WA - 30 jours" },
+                { name: "Pass 5 000 FCFA", price: 5000, desc: "7,4 Go + MTN TV, FB/WA - 30 jours" },
+                { name: "Pass 10 000 FCFA", price: 10000, desc: "20 Go + MTN TV, FB/WA - 30 jours" },
+                { name: "Pass 15 000 FCFA", price: 15000, desc: "30 Go + MTN TV, FB/WA - 30 jours" },
+                { name: "Pass 20 000 FCFA", price: 20000, desc: "45 Go + MTN TV, FB/WA - 30 jours" },
+                { name: "Appels Illimités 300F", price: 300, desc: "Appels illimités jusqu'à minuit" },
+                { name: "Appels Illimités 1000F", price: 1000, desc: "Appels illimités + 500 Mo (3 jours)" },
+                { name: "Pass IllimiT 3J", price: 2700, desc: "Data / Appels illimités - 3 jours" },
+                { name: "Pass IllimiT 7J", price: 5500, desc: "Data / Appels illimités - 7 jours" }
+            ],
+            moov: [
+                { name: "Pass Izy Mix 200F", price: 200, desc: "Pass internet/appels mini" },
+                { name: "Pass Izy Mix 500F", price: 500, desc: "Pass internet/appels standard" },
+                { name: "Pass Gbêssê 1000F", price: 1000, desc: "Gros volume internet" },
+                { name: "Pass Gbêssê 2000F", price: 2000, desc: "Volume maxi + réseaux sociaux" },
+                { name: "Pass Box Maison 5000F", price: 5000, desc: "Connexion illimitée domicile" },
+                { name: "Pass Box Maison 10000F", price: 10000, desc: "Haut débit illimité mois" }
+            ],
+            credit: [
+                { name: "Crédit Direct 100 F", price: 100, desc: "Transfert crédit direct 100F" },
+                { name: "Crédit Direct 200 F", price: 200, desc: "Transfert crédit direct 200F" },
+                { name: "Crédit Direct 500 F", price: 500, desc: "Transfert crédit direct 500F" },
+                { name: "Crédit Direct 1 000 F", price: 1000, desc: "Transfert crédit direct 1000F" },
+                { name: "Crédit Direct 2 000 F", price: 2000, desc: "Transfert crédit direct 2000F" },
+                { name: "Crédit Direct 5 000 F", price: 5000, desc: "Transfert crédit direct 5000F" }
+            ]
+        };
+
+        let currentOp = 'orange';
+        let selectedPass = null;
+
+        function selectOperator(op) {
+            currentOp = op;
+            document.querySelectorAll('.operator-btn').forEach(btn => {
+                btn.className = "operator-btn flex flex-col items-center justify-center p-2.5 rounded-2xl border-2 border-slate-700 bg-slate-800/80 text-slate-300 transition-all";
+            });
+            document.getElementById(`btn-${op}`).className = "operator-btn flex flex-col items-center justify-center p-2.5 rounded-2xl border-2 border-sky-500 bg-sky-500/20 text-white transition-all shadow-lg";
+            
+            selectedPass = null;
+            document.getElementById('summary-title').innerText = "Aucun forfait";
+            document.getElementById('summary-price').innerText = "0 FCFA";
+            renderPasses();
+        }
+
+        function renderPasses(filter = '') {
+            const container = document.getElementById('passes-container');
+            container.innerHTML = '';
+            
+            const passes = catalogues[currentOp].filter(p => 
+                p.name.toLowerCase().includes(filter.toLowerCase()) || 
+                p.desc.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            if (passes.length === 0) {
+                container.innerHTML = `<p class="text-slate-400 text-center col-span-2 py-4 text-sm">Aucun pass trouvé</p>`;
+                return;
+            }
+
+            passes.forEach(pass => {
+                const isSelected = selectedPass && selectedPass.name === pass.name;
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-2xl border cursor-pointer transition-all flex justify-between items-center ${isSelected ? 'bg-sky-600/30 border-sky-500 shadow-md' : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'}`;
+                card.onclick = () => selectPassItem(pass);
+                card.innerHTML = `
+                    <div>
+                        <h3 class="font-bold text-sm text-white">${pass.name}</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">${pass.desc}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-black text-sky-400 text-sm">${pass.price.toLocaleString()} F</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectPassItem(pass) {
+            selectedPass = pass;
+            document.getElementById('summary-title').innerText = pass.name;
+            document.getElementById('summary-price').innerText = pass.price.toLocaleString() + ' FCFA';
+            renderPasses(document.getElementById('search-input').value);
+        }
+
+        function filterPasses() {
+            renderPasses(document.getElementById('search-input').value);
+        }
+
+        function showInstallHelp() {
+            document.getElementById('install-modal').classList.remove('hidden');
+        }
+
+        function closeInstallHelp() {
+            document.getElementById('install-modal').classList.add('hidden');
+        }
+
+        function processCheckout() {
+            const targetPhone = document.getElementById('target-phone').value.trim();
+            const wavePhone = document.getElementById('wave-phone').value.trim();
+
+            if (!selectedPass) {
+                alert("Erreur : Tu dois sélectionner un forfait pour continuer !");
+                return;
+            }
+            if (!targetPhone) {
+                alert("Erreur : Veuillez entrer le numéro de téléphone à recharger !");
+                document.getElementById('target-phone').focus();
+                return;
+            }
+            if (!wavePhone) {
+                alert("ATTENTION : Ton numéro Wave est obligatoire pour valider la commande !");
+                document.getElementById('wave-phone').focus();
+                return;
+            }
+
+            // Ouvre Wave
+            window.open('https://pay.wave.com/m/M_8Yiu-brVsVnT/c/ci/', '_blank');
+
+            // Redirige vers WhatsApp
+            setTimeout(() => {
+                const message = `🚨 *NOUVELLE COMMANDE K-BINE* 🚨\n\n📌 *Opérateur :* ${currentOp.toUpperCase()}\n📦 *Forfait :* ${selectedPass.name}\n💰 *Montant :* ${selectedPass.price} FCFA\n📱 *Numéro à recharger :* ${targetPhone}\n💳 *Mon Numéro Wave (Payeur) :* ${wavePhone}\n\n_Je viens d'effectuer le paiement, voici ma capture d'écran :_`;
+                window.location.href = `https://wa.me/2250789203558?text=${encodeURIComponent(message)}`;
+            }, 1500);
+        }
+
+        window.onload = () => { selectOperator('orange'); };
+    </script>
+</body>
+</html>
